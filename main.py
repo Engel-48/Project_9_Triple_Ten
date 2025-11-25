@@ -1,9 +1,11 @@
 import time
 from time import sleep
+#comentario de prueba
 
 import data
 import pages
 import helpers
+import elements
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 from selenium.webdriver import Keys
@@ -32,13 +34,16 @@ class TestUrbanRoutes:
         cls.driver = webdriver.Chrome(service=Service(), options=options)
 #1. Establecer dirección
     def test_set_route(self):
+
         self.driver.get(data.urban_routes_url)
         routes_page = pages.UrbanRoutesPage(self.driver)
         address_from = data.address_from
         address_to = data.address_to
         routes_page.set_route(address_from, address_to)
+        #print(routes_page.get_from())
         assert routes_page.get_from() == address_from
         assert routes_page.get_to() == address_to
+
 #. Selección taxi
         routes_page = pages.UrbanRoutesPage(self.driver)
         routes_page.click_on_request_taxi_button()
@@ -61,12 +66,12 @@ class TestUrbanRoutes:
         routes_page.click_on_cellphone_number_field()
 
 
-#5 Enviar número de teléfono
+# Enviar número de teléfono
         routes_page = pages.UrbanRoutesPage(self.driver)
         cellphone_number = data.phone_number
         routes_page.set_cellphone_number(cellphone_number)
 
-#6. Seleccionar botón siguiente
+# Seleccionar botón siguiente
 
         routes_page = pages.UrbanRoutesPage(self.driver)
         routes_page.click_next_button()
@@ -83,7 +88,7 @@ class TestUrbanRoutes:
 
         assert routes_page.get_phone_number() == '+1 123 123 12 12'
 
-#4. Seleccionar método de pago
+# Seleccionar método de pago
 
     def test_click_on_pay_method_field(self):
         routes_page = pages.UrbanRoutesPage(self.driver)
@@ -151,7 +156,8 @@ class TestUrbanRoutes:
         routes_page = pages.UrbanRoutesPage(self.driver)
         routes_page.click_on_ask_taxi_button()
 
-        image = WebDriverWait(self.driver, 40).until(EC.visibility_of_element_located(routes_page.image_bender))
+
+        image = WebDriverWait(self.driver, 40).until(EC.visibility_of_element_located(elements.image_bender))
         assert image.is_displayed(), "La imágen de bender no es visible"
 #9. Validación de información del conductor
     def test_validation_driver_information(self):
